@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
 #include <SparkFun_Qwiic_Humidity_AHT20.h>
@@ -9,12 +10,11 @@
 #define OLED_RESET -1 // Reset pin number (-1: sharing Arduino reset pin)
 #define SCREEN_ADDRESS 0x3C // Display address; 0x3D for 128 X 64, 0x3C for 128 X 32
 
+AHT20 humidity_sensor;
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 void setup()
 {
-    Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-    AHT20 humidity_sensor;
-
     Serial.begin(115200);
 
     if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
@@ -22,7 +22,7 @@ void setup()
         for(;;); // Loop forever
     }
 
-    display.clearDisplay(); // Clear buffer
+    display.clearDisplay();    // Clear buffer
     Wire.begin();
     humidity_sensor.begin();
 }
@@ -33,4 +33,22 @@ void loop()
     delay(200);
     digitalWrite(13, LOW);
     delay(50);
+}
+
+
+void printData(int humidity, float temp) {
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setTextColor(SSD1306_WHITE);    // Draw white text
+    display.setCursor(0,0);    // Start at top left corner
+
+    display.print("Relative humidity: ");
+    display.print(humidity);
+    display.print("%");
+    display.print("\n");
+    display.print("Temperature: ");
+    display.print(temp, 1);
+
+    display.display();
+    delay(400);
 }
