@@ -6,10 +6,10 @@
 #include <RF24.h>
 
 
-#define SCREEN_WIDTH 128 // OLED display width (in pixels)
-#define SCREEN_HEIGHT 64 // OLED display height (in pixels)
-#define OLED_RESET -1 // Reset pin number (-1: sharing Arduino reset pin)
-#define SCREEN_ADDRESS 0x3C // Display address; 0x3D for 128 X 64, 0x3C for 128 X 32
+#define SCREEN_WIDTH 128    // OLED display width (in pixels)
+#define SCREEN_HEIGHT 64    // OLED display height (in pixels)
+#define OLED_RESET -1   // Reset pin number (-1: sharing Arduino reset pin)
+#define SCREEN_ADDRESS 0x3C    // Display address; 0x3D for 128 X 64, 0x3C for 128 X 32
 
 // Instantiate a sensor
 AHT20 humidity_sensor;
@@ -18,7 +18,7 @@ AHT20 humidity_sensor;
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // Instantiate an nRF24L01 transceiver
-RF24 radio(7, 8);  // Using pin 7 as the CE pin, and pin 8 as the CSN pin
+RF24 radio(7, 8);   // Using pin 7 as the CE pin, and pin 8 as the CSN pin
 
 void setup()
 {
@@ -26,7 +26,7 @@ void setup()
 
     if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
         Serial.println(F("SSD1306 allocation failed"));
-        for(;;); // Loop forever
+        for(;;);    // Loop forever
     }
 
     display.clearDisplay();    // Clear buffer
@@ -36,10 +36,16 @@ void setup()
 
 void loop()
 {
-    digitalWrite(13, HIGH);
-    delay(200);
-    digitalWrite(13, LOW);
-    delay(50);
+    while (humidity_sensor.available() == 1){
+    
+        float hum = humidity_sensor.getHumidity();
+        float temp = humidity_sensor.getTemperature();
+        delay(200);
+        printData(hum, temp);
+        delay(500);
+    }
+
+    delay(300);
 }
 
 
