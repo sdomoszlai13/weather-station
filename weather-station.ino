@@ -56,12 +56,12 @@ void setup(){
         Serial.println("Setup finished");
     }
 
-    /* Default settings from datasheet. */
-    bmp280.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
-    Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
-    Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
-    Adafruit_BMP280::FILTER_X16,      /* Filtering. */
-    Adafruit_BMP280::STANDBY_MS_500); /* Standby time. */
+    // Default settings from datasheet
+    bmp280.setSampling(Adafruit_BMP280::MODE_NORMAL,
+                    Adafruit_BMP280::SAMPLING_X2,   // Temperature oversampling
+                    Adafruit_BMP280::SAMPLING_X16,  // Pressure oversampling
+                    Adafruit_BMP280::FILTER_X16,    // Filtering
+                    Adafruit_BMP280::STANDBY_MS_500);   // Standby time
 }
 
 
@@ -71,15 +71,15 @@ void loop(){
 
     // AHT20
     Serial.print("Humidity: ");
-    Serial.print(aht20.getHumidity());
+    Serial.println(aht20.getHumidity());
     Serial.print("Temperature: ");
-    Serial.print(aht20.getTemperature());
+    Serial.println(aht20.getTemperature());
 
     // BMP280
-    Serial.print(F("Temperature: "));
-    Serial.print(bmp280.readTemperature());
-    Serial.print(F("Pressure: "));
-    Serial.print(bmp280.readPressure());
+    Serial.print("Temperature: ");
+    Serial.println(bmp280.readTemperature());
+    Serial.print("Pressure: ");
+    Serial.println(bmp280.readPressure());
 
     delay(300);
 }
