@@ -27,8 +27,8 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 // Instantiate an nRF24L01 transceiver
 RF24 radio(7, 8);   // Using pin 7 as the CE pin, and pin 8 as the CSN pin
 
-void setup()
-{
+void setup(){
+
     Serial.begin(115200);
 /*
     if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
@@ -65,25 +65,21 @@ void setup()
 }
 
 
-void loop()
-{
-    if (aht20.available() == 1){
-        
-        float temp = aht20.getTemperature();
-        float hum = aht20.getHumidity();
-        delay(200);
-        // printData(hum, temp);
-        delay(500);
-        Serial.print("Temperature: ");
-        Serial.println(temp);
-    }
+void loop(){
 
-    Serial.print(F("Temperature = "));
+    delay(1000);
+
+    // AHT20
+    Serial.print("Humidity: ");
+    Serial.print(aht20.getHumidity());
+    Serial.print("Temperature: ");
+    Serial.print(aht20.getTemperature());
+
+    // BMP280
+    Serial.print(F("Temperature: "));
     Serial.print(bmp280.readTemperature());
-
-    Serial.print(F("Pressure = "));
+    Serial.print(F("Pressure: "));
     Serial.print(bmp280.readPressure());
-    Serial.println(" Pa");
 
     delay(300);
 }
