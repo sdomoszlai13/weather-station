@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include <Adafruit_SSD1306.h>
 #include <SparkFun_Qwiic_Humidity_AHT20.h>
 #include <Adafruit_BMP280.h>
-#include <Adafruit_SSD1306.h>
 #include <NRFLite.h>
 
 

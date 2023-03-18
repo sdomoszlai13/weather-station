@@ -1,11 +1,9 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include <Adafruit_SSD1306.h>
+#include <LiquidCrystal_I2C.h>
 #include <SparkFun_Qwiic_Humidity_AHT20.h>
 #include <Adafruit_BMP280.h>
-#include <LiquidCrystal_I2C.h>
-#include <RF24.h>
-#include <string.h>
+#include <NRFLite.h>
 
 
 // Instantiate an AHT20 sensor
@@ -20,7 +18,6 @@ Adafruit_Sensor *bmp_pressure = bmp280.getPressureSensor();
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 // Instantiate an nRF24L01 transceiver
-RF24 radio(7, 8);   // Using pin 7 as the CE pin, and pin 8 as the CSN pin
 
 
 void setup(){
