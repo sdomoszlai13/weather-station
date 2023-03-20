@@ -46,7 +46,7 @@ void setup(){
         while (1) delay(500);
     }
 
-    Serial.println("Setup finished");
+    Serial.println("AHT20 setup finished");
 
     // Setup BMP280 sensor
     if (!bmp280.begin()){
@@ -56,7 +56,7 @@ void setup(){
         while (1) delay(500);
     }
 
-    Serial.println("Setup finished");
+    Serial.println("BMP280 setup finished");
 
     bmp280.setSampling(Adafruit_BMP280::MODE_NORMAL,     // Normal mode
                        Adafruit_BMP280::SAMPLING_X2,     // Temperature oversampling
@@ -71,19 +71,20 @@ void setup(){
         while (1) delay(500);
     }
 
-        display.clearDisplay();
-        display.display();
-        display.setTextSize(1);
-        display.setTextColor(WHITE);
-        Serial.println("Setup finished");
+    display.clearDisplay();
+    display.display();
+    display.setTextSize(1);
+    display.setTextColor(WHITE);
+    Serial.println("SSD1306 setup finished");
     
-    //Setup transceiver
+    // Setup transceiver
     if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN)){
         
         Serial.println("Can't communicate with radio!");
         while (1) delay();
-        Serial.println("Setup finished");
     }
+
+    Serial.println("nRF24L01 setup finished");
 }
 
 void loop(){
