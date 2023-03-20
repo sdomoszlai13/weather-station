@@ -46,7 +46,7 @@ void setup(){
         while (1) delay(500);
     }
 
-    Serial.println("Setup finished");
+    Serial.println("AHT20 setup finished");
 
     // Setup BMP280 sensor
     if (!bmp280.begin()){
@@ -61,11 +61,16 @@ void setup(){
             Adafruit_BMP280::SAMPLING_X16,  // Pressure oversampling
             Adafruit_BMP280::FILTER_X16,    // Filtering
             Adafruit_BMP280::STANDBY_MS_500);   // Standby time
-    Serial.println("Setup finished");
+    Serial.println("BMP280 setup finished");
     
     // Setup display
-    lcd.init();
-    lcd.backlight();
+    if(!(lcd.init() && lcd.backlight())){
+
+        Serial.println("Display setup failed!");
+        while(1) delay(500);
+    }
+
+    Serial.println("SSD1306 setup finished")
 
     // Setup transceiver
     if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN)){
@@ -74,7 +79,7 @@ void setup(){
         while (1) delay(500);
     }
 
-    Serial.println("Setup finished");
+    Serial.println("nRF24L01 setup finished");
 }
 
 
