@@ -100,16 +100,16 @@ void setup(){
 void loop(){
 
     // AHT20 measurements
-    static float aht20hum = aht20.getHumidity();
-    static float aht20temp = aht20.getTemperature();
+    float aht20hum = aht20.getHumidity();
+    float aht20temp = aht20.getTemperature();
 
     // BMP280 measurements
-    static float bmp280temp = bmp280.readTemperature();
-    static float bmp280pres = bmp280.readPressure();
+    float bmp280temp = bmp280.readTemperature();
+    float bmp280pres = bmp280.readPressure();
 
-    static float temp = bmp280temp;
-    static float pres = bmp280pres;
-    static float hum = aht20hum;
+    float temp = bmp280temp;
+    float pres = bmp280pres;
+    float hum = aht20hum;
 
     // Print values on display if button is pressed
     if (button_pressed == button_compare){
