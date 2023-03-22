@@ -64,13 +64,10 @@ void setup(){
     Serial.println("BMP280 setup finished");
     
     // Setup display
-    if(!(lcd.init() && lcd.backlight())){
+    lcd.init();
+    lcd.backlight();
 
-        Serial.println("Display setup failed!");
-        while(1) delay(500);
-    }
-
-    Serial.println("SSD1306 setup finished")
+    Serial.println("SSD1306 setup finished");
 
     // Setup transceiver
     if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN)){
