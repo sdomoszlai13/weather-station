@@ -116,6 +116,7 @@ void loop(){
 
         printData(temp, pres, hum);
         button_pressed = LOW;
+        Serial.println("Button pressed, display activated");
     }
 
     delay(1000);
@@ -130,12 +131,32 @@ void printData(float temp, float pres, float hum){
     display.clearDisplay();
     display.setTextSize(2);
     display.setTextColor(SSD1306_WHITE);
+
+    // Display temperature
     display.setCursor(0, 0);
-    display.print(hum);
-    display.print("%");
-    display.print("\n");
     display.print(temp, 1);
     display.print(" C");
+    display.display();
+    delay(1000);
+    display.clearDisplay();
+
+    // Display pressure
+    display.setCursor(0, 0);
+    display.print(pres, 1);
+    display.print(" hPa");
+    display.display();
+    delay(1000);
+    display.clearDisplay();
+
+    // Display humidity
+    display.setCursor(0, 0);
+    display.print(hum, 1);
+    display.print("%");
+    display.display();
+    delay(1000);
+    display.clearDisplay();
+
+    display.print("");
     display.display();
 }
 
