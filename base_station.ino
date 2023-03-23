@@ -90,21 +90,28 @@ void loop(){
     float bmp280temp = bmp280.readTemperature();
     float bmp280pres = bmp280.readPressure();
 
-    delay(50);
-
-    // Print values on display
-    RadioPacket indoor_data;
-    indoor_data.temp = bmp280temp;
-    indoor_data.pres = bmp280pres;
-    printData(indoor_data);
-    delay(3000);
-
     // Receive values
     RadioPacket outdoor_data = receiveData();
 
-    // Print values on display
-    printData(outdoor_data);
-    delay(3000);
+    RadioPacket indoor_data;
+    indoor_data.temp = bmp280temp;
+    indoor_data.pres = bmp280pres;
+    indoor_data.hum = aht20hum;
+
+    // Print temperatures on display
+    printData(indoor_data.temp, outdoor_data.temp);
+    delay(1000);
+    lcd.clear();
+
+    // Print pressures on display
+    printData(indoor_data.pres, outdoor_data.pres);
+    delay(1000);
+    lcd.clear();
+
+    // Print humidities on display
+    printData(indoor_data.hum, outdoor_data.hum);
+    delay(1000);
+    lcd.clear();
 }
 
 
@@ -121,15 +128,10 @@ RadioPacket receiveData(){
 }
 
 
-void printData(RadioPacket weather_data){
+void printData(float indoor_val, float outdoor_val){
 
     lcd.setCursor(1,0);
-    lcd.print("Temp: ");
-    lcd.setCursor(7,0);
-    lcd.print(weather_data.temp);
+    lcd.print(indoor_val);
     lcd.setCursor(1,1);
-    lcd.print("Pres: ");
-    lcd.setCursor(7,1);
-    weather_data.pres = weather_data.pres / 100;
-    lcd.print(weather_data.pres);
+    lcd.print(outdoor_val);
 }
