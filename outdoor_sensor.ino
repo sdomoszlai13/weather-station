@@ -46,7 +46,7 @@ void setup(){
     Serial.begin(115200);
     Wire.begin();
 
-    // 
+    // Setup interrupt service routine
     pinMode(interrupt_pin, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(interrupt_pin), buttonPressed, FALLING);
 
@@ -77,7 +77,7 @@ void setup(){
                        Adafruit_BMP280::STANDBY_MS_500); // Standby time
 
     // Setup display
-    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)){ // Address 0x3C for 128x32
+    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)){    // Address 0x3C for 128x32
 
         Serial.println(("SSD1306 allocation failed"));
         while (1) delay(500);
@@ -111,7 +111,7 @@ void loop(){
     float bmp280pres = bmp280.readPressure();
 
     float temp = bmp280temp;
-    float pres = bmp280pres;
+    float pres = bmp280pres / 100;    // Pressure in hPa
     float hum = aht20hum;
 
     // Print values on display if button is pressed
@@ -125,7 +125,7 @@ void loop(){
     delay(1000);
 
     // Send values to base station
-    sendData(bmp280temp, bmp280pres, aht20hum);
+    sendData(temp, pres, hum);
 }
 
 
