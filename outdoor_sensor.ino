@@ -7,6 +7,9 @@
 #include <NRFLite.h>
 
 
+// OUTDOOR SENSOR
+
+
 volatile byte button_pressed = LOW;    // Global variable for the ISR to monitor button
 const byte button_compare = HIGH;    // Byte to compare button_pressed to
 const byte interrupt_pin = 2;    // Using digital pin 2 as interrupt pin
@@ -32,9 +35,9 @@ const static uint8_t PIN_RADIO_CSN = 10;
 
 struct RadioPacket // Packet to be sent
 {
-    uint8_t temp;
-    uint32_t pres;
-    uint32_t hum;
+    float temp;
+    float pres;
+    float hum;
 };
 
 
@@ -175,11 +178,11 @@ void sendData(float temp, float pres, float hum){
 
     if (_radio.send(DESTINATION_RADIO_ID, &_radioData, sizeof(_radioData)))
     {
-        Serial.println(" ...Success");
+        Serial.println("...Success");
     }
     else
     {
-        Serial.println(" ...Failed");
+        Serial.println("...Failed");
 
     }
 }
