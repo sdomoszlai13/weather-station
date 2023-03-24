@@ -140,7 +140,7 @@ void printData(float temp, float pres, float hum){
     display.print(temp, 1);
     display.print(" C");
     display.display();
-    delay(1000);
+    delay(3000);
     display.clearDisplay();
 
     // Display pressure
@@ -148,7 +148,7 @@ void printData(float temp, float pres, float hum){
     display.print(pres, 1);
     display.print(" hPa");
     display.display();
-    delay(1000);
+    delay(3000);
     display.clearDisplay();
 
     // Display humidity
@@ -156,7 +156,7 @@ void printData(float temp, float pres, float hum){
     display.print(hum, 1);
     display.print("%");
     display.display();
-    delay(1000);
+    delay(3000);
     display.clearDisplay();
 
     display.print("");
@@ -183,7 +183,6 @@ void sendData(float temp, float pres, float hum){
     else
     {
         Serial.println("...Failed");
-
     }
 }
 

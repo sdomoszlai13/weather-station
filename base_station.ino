@@ -107,19 +107,19 @@ void loop(){
     // Print temperatures on display
     type_of_val = temp;
     printData(indoor_data.temp, outdoor_data.temp, type_of_val);
-    delay(2000);
+    delay(4000);
     lcd.clear();
 
     // Print pressures on display
     type_of_val = pres;
     printData(indoor_data.pres, outdoor_data.pres, type_of_val);
-    delay(2000);
+    delay(4000);
     lcd.clear();
 
     // Print humidities on display
     type_of_val = hum;
     printData(indoor_data.hum, outdoor_data.hum, type_of_val);
-    delay(2000);
+    delay(4000);
     lcd.clear();
 }
 
@@ -140,35 +140,37 @@ RadioPacket receiveData(){
 void printData(float indoor_val, float outdoor_val, TypeOfVal type_of_val){
 
     if (type_of_val == temp){
-        lcd.setCursor(1,0);
+        lcd.setCursor(4,0);
         lcd.print(indoor_val);
-        lcd.setCursor(6,0);
-        lcd.print(" C");
-        lcd.setCursor(1,1);
+        lcd.setCursor(10,0);
+        lcd.print((char)223);
+        lcd.print("C");
+        lcd.setCursor(4,1);
         lcd.print(outdoor_val);
-        lcd.setCursor(6,1);
-        lcd.print(" C");
+        lcd.setCursor(10,1);
+        lcd.print((char)223);
+        lcd.print("C");
     }
 
     else if (type_of_val == pres){
-        lcd.setCursor(1,0);
+        lcd.setCursor(3,0);
         lcd.print(indoor_val);
-        lcd.setCursor(7,0);
+        lcd.setCursor(9,0);
         lcd.print(" hPa");
-        lcd.setCursor(1,1);
+        lcd.setCursor(3,1);
         lcd.print(outdoor_val);
-        lcd.setCursor(7,1);
+        lcd.setCursor(9,1);
         lcd.print(" hPa");
     }
 
     else if (type_of_val == hum){
-        lcd.setCursor(1,0);
+        lcd.setCursor(5,0);
         lcd.print(indoor_val);
-        lcd.setCursor(6,0);
+        lcd.setCursor(10,0);
         lcd.print("%");
-        lcd.setCursor(1,1);
+        lcd.setCursor(5,1);
         lcd.print(outdoor_val);
-        lcd.setCursor(6,1);
+        lcd.setCursor(10,1);
         lcd.print("%");
     }
 
