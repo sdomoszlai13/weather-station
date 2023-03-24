@@ -7,6 +7,9 @@
 #include <NRFLite.h>
 
 
+// BASE STATION
+
+
 // Instantiate an AHT20 sensor
 AHT20 aht20;
 
@@ -27,10 +30,13 @@ const static uint8_t PIN_RADIO_CSN = 10;
 
 struct RadioPacket    // Packet to be received
 {
-    uint8_t temp;
-    uint32_t pres;
-    uint32_t hum;
+    float temp;
+    float pres;
+    float hum;
 };
+
+enum TypeOfVal {temp, pres, hum};
+TypeOfVal type_of_val = temp;
 
 
 void setup(){
@@ -57,10 +63,10 @@ void setup(){
     }
 
     bmp280.setSampling(Adafruit_BMP280::MODE_NORMAL,
-            Adafruit_BMP280::SAMPLING_X2,   // Temperature oversampling
-            Adafruit_BMP280::SAMPLING_X16,  // Pressure oversampling
+            Adafruit_BMP280::SAMPLING_X2,    // Temperature oversampling
+            Adafruit_BMP280::SAMPLING_X16,    // Pressure oversampling
             Adafruit_BMP280::FILTER_X16,    // Filtering
-            Adafruit_BMP280::STANDBY_MS_500);   // Standby time
+            Adafruit_BMP280::STANDBY_MS_500);    // Standby time
     Serial.println("BMP280 setup finished");
     
     // Setup display
@@ -95,22 +101,25 @@ void loop(){
 
     RadioPacket indoor_data;
     indoor_data.temp = bmp280temp;
-    indoor_data.pres = bmp280pres;
+    indoor_data.pres = bmp280pres / 100;    // Pressure in hPa
     indoor_data.hum = aht20hum;
 
     // Print temperatures on display
-    printData(indoor_data.temp, outdoor_data.temp);
-    delay(1000);
+    type_of_val = temp;
+    printData(indoor_data.temp, outdoor_data.temp, type_of_val);
+    delay(2000);
     lcd.clear();
 
     // Print pressures on display
-    printData(indoor_data.pres, outdoor_data.pres);
-    delay(1000);
+    type_of_val = pres;
+    printData(indoor_data.pres, outdoor_data.pres, type_of_val);
+    delay(2000);
     lcd.clear();
 
     // Print humidities on display
-    printData(indoor_data.hum, outdoor_data.hum);
-    delay(1000);
+    type_of_val = hum;
+    printData(indoor_data.hum, outdoor_data.hum, type_of_val);
+    delay(2000);
     lcd.clear();
 }
 
@@ -128,10 +137,43 @@ RadioPacket receiveData(){
 }
 
 
-void printData(float indoor_val, float outdoor_val){
+void printData(float indoor_val, float outdoor_val, TypeOfVal type_of_val){
 
-    lcd.setCursor(1,0);
-    lcd.print(indoor_val);
-    lcd.setCursor(1,1);
-    lcd.print(outdoor_val);
+    if (type_of_val == temp){
+        lcd.setCursor(1,0);
+        lcd.print(indoor_val);
+        lcd.setCursor(6,0);
+        lcd.print(" C");
+        lcd.setCursor(1,1);
+        lcd.print(outdoor_val);
+        lcd.setCursor(6,1);
+        lcd.print(" C");
+    }
+
+    else if (type_of_val == pres){
+        lcd.setCursor(1,0);
+        lcd.print(indoor_val);
+        lcd.setCursor(7,0);
+        lcd.print(" hPa");
+        lcd.setCursor(1,1);
+        lcd.print(outdoor_val);
+        lcd.setCursor(7,1);
+        lcd.print(" hPa");
+    }
+
+    else if (type_of_val == hum){
+        lcd.setCursor(1,0);
+        lcd.print(indoor_val);
+        lcd.setCursor(6,0);
+        lcd.print("%");
+        lcd.setCursor(1,1);
+        lcd.print(outdoor_val);
+        lcd.setCursor(6,1);
+        lcd.print("%");
+    }
+
+    else{
+        lcd.setCursor(0,1);
+        lcd.print("Unknown data type!");
+    }
 }
