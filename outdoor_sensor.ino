@@ -10,9 +10,9 @@
 // OUTDOOR SENSOR
 
 
-volatile byte button_pressed = LOW;    // Global variable for the ISR to monitor button
-const byte button_compare = HIGH;    // Byte to compare button_pressed to
-const byte interrupt_pin = 2;    // Using digital pin 2 as interrupt pin
+volatile byte button_pressed = LOW; // Global variable for the ISR to monitor button
+const byte button_compare = HIGH;   // Byte to compare button_pressed to
+const byte interrupt_pin = 2;       // Using digital pin 2 as interrupt pin
 
 
 // Instantiate an AHT20 sensor
@@ -28,10 +28,11 @@ Adafruit_SSD1306 display = Adafruit_SSD1306(128, 32, &Wire);    // Set display s
 
 // Instantiate a transceiver
 NRFLite _radio;
-const static uint8_t RADIO_ID = 1;    // This transceiver
-const static uint8_t DESTINATION_RADIO_ID = 0;    // Other transceiver
+const static uint8_t RADIO_ID = 1;              // This transceiver
+const static uint8_t DESTINATION_RADIO_ID = 0;  // Other transceiver
 const static uint8_t PIN_RADIO_CE = 9;
 const static uint8_t PIN_RADIO_CSN = 10;
+
 
 struct RadioPacket // Packet to be sent
 {
@@ -51,8 +52,8 @@ void setup(){
     attachInterrupt(digitalPinToInterrupt(interrupt_pin), buttonPressed, FALLING);
 
     // Setup AHT20 sensor
-    if (!aht20.begin()){
-
+    if (!aht20.begin())
+    {
         Serial.println("Could not find a valid AHT20 sensor, check wiring"
                        " or try a different address!");
         while (1) delay(500);
@@ -61,8 +62,8 @@ void setup(){
     Serial.println("AHT20 setup finished");
 
     // Setup BMP280 sensor
-    if (!bmp280.begin()){
-
+    if (!bmp280.begin())
+    {
         Serial.println("Could not find a valid BMP280 sensor, check wiring"
                        " or try a different address!");
         while (1) delay(500);
@@ -77,8 +78,8 @@ void setup(){
                        Adafruit_BMP280::STANDBY_MS_500); // Standby time
 
     // Setup display
-    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)){    // Address 0x3C for 128x32
-
+    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) // Address 0x3C for 128x32
+    {
         Serial.println(("SSD1306 allocation failed"));
         while (1) delay(500);
     }
@@ -90,8 +91,8 @@ void setup(){
     Serial.println("SSD1306 setup finished");
     
     // Setup transceiver
-    if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN)){
-        
+    if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN))
+    {    
         Serial.println("Can't communicate with radio!");
         while (1) delay(500);
     }
@@ -111,12 +112,12 @@ void loop(){
     float bmp280pres = bmp280.readPressure();
 
     float temp = bmp280temp;
-    float pres = bmp280pres / 100;    // Pressure in hPa
+    float pres = bmp280pres / 100;  // Pressure in hPa
     float hum = aht20hum;
 
     // Print values on display if button is pressed
-    if (button_pressed == button_compare){
-
+    if (button_pressed == button_compare)
+    {
         printData(temp, pres, hum);
         button_pressed = LOW;
         Serial.println("Button pressed, display activated");
