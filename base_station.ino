@@ -126,7 +126,7 @@ void loop(){
 
 RadioPacket receiveData(){
 
-    RadioPacket _radioData;
+    RadioPacket _radioData = {-99.0, -99.0, -99.0};
 
     if (_radio.hasData())
     {
