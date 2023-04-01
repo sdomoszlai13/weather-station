@@ -35,8 +35,7 @@ struct RadioPacket  // Packet to be received
     float hum;
 };
 
-enum TypeOfVal {temp, pres, hum};
-TypeOfVal type_of_val = temp;
+enum TypeOfVal {temp, pres, hum};   // Determines which display function to use
 
 
 void setup(){
@@ -105,20 +104,17 @@ void loop(){
     indoor_data.hum = aht20hum;
 
     // Print temperatures on display
-    type_of_val = temp;
-    printData(indoor_data.temp, outdoor_data.temp, type_of_val);
+    printData(indoor_data.temp, outdoor_data.temp, temp);
     delay(4000);
     lcd.clear();
 
     // Print pressures on display
-    type_of_val = pres;
-    printData(indoor_data.pres, outdoor_data.pres, type_of_val);
+    printData(indoor_data.pres, outdoor_data.pres, pres);
     delay(4000);
     lcd.clear();
 
     // Print humidities on display
-    type_of_val = hum;
-    printData(indoor_data.hum, outdoor_data.hum, type_of_val);
+    printData(indoor_data.hum, outdoor_data.hum, hum);
     delay(4000);
     lcd.clear();
 }
