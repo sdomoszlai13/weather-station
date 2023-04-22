@@ -4,7 +4,7 @@
 
 The weather station consists of a module that can be placed in your house and an outdoor module that you can place outside. The modules take measurements about once every 20 seconds. The outdoor module sends the measured values to the base station that displays both inside and outside temperatures, humidities and pressures. To save energy, the display on the outdoor module is only turned on for a few seconds when a button is pressed on the module. However, measured values are always sent to the base station. For reasons of readability, the measured values are displayed in indoor-outdoor pairs on the screen of the base station.
 
-## Files:
+**Files:**
 * base_station.ino: running on the base station's Arduino
 * outdoor_sensor.ino: running on the outdoor unit's Arduino
 
